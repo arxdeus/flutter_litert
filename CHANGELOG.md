@@ -1,3 +1,6 @@
+## 0.1.1
+* Update AndroidManifest.xml
+
 ## 0.1.0
 * Fix IsolateInterpreter thread-safety bug causing intermittent native crashes when hardware delegates are active
 
