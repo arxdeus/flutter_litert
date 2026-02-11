@@ -45,6 +45,8 @@ class IsolateInterpreter {
   final int address;
   final String debugName;
 
+  late final Interpreter _callerInterpreter;
+
   final ReceivePort _receivePort = ReceivePort();
   late final SendPort _sendPort;
   late final Isolate _isolate;
@@ -86,6 +88,8 @@ class IsolateInterpreter {
     });
 
     await sendPortCompleter.future;
+
+    _callerInterpreter = Interpreter.fromAddress(address);
   }
 
   // Main function for the spawned isolate.
@@ -94,10 +98,16 @@ class IsolateInterpreter {
 
     sendPort.send(port.sendPort);
 
+    Interpreter? cachedInterpreter;
+    int? cachedAddress;
+
     await for (final _IsolateInterpreterData data in port) {
-      final interpreter = Interpreter.fromAddress(data.address);
+      if (cachedInterpreter == null || cachedAddress != data.address) {
+        cachedInterpreter = Interpreter.fromAddress(data.address);
+        cachedAddress = data.address;
+      }
       sendPort.send(IsolateInterpreterState.loading);
-      interpreter.runInference(data.inputs);
+      cachedInterpreter.runInference(data.inputs);
       sendPort.send(IsolateInterpreterState.idle);
     }
   }
@@ -126,8 +136,7 @@ class IsolateInterpreter {
     _sendPort.send(data);
     await _wait();
 
-    final interpreter = Interpreter.fromAddress(address);
-    final outputTensors = interpreter.getOutputTensors();
+    final outputTensors = _callerInterpreter.getOutputTensors();
     for (var i = 0; i < outputTensors.length; i++) {
       outputTensors[i].copyTo(outputs[i]!);
     }

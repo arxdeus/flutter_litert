@@ -1,3 +1,6 @@
+## 0.1.0
+* Fix IsolateInterpreter thread-safety bug causing intermittent native crashes when hardware delegates are active
+
 ## 0.0.1
 * Initial release, forked from tflite_flutter_custom v1.2.5
 * Rebranded to flutter_litert for LiteRT ecosystem

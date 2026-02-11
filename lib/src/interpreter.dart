@@ -44,9 +44,10 @@ class Interpreter {
   int get lastNativeInferenceDurationMicroSeconds =>
       _lastNativeInferenceDurationMicroSeconds;
 
-  Interpreter._(this._interpreter) {
-    // Allocate tensors when interpreter is created
-    allocateTensors();
+  Interpreter._(this._interpreter, {bool skipAllocate = false}) {
+    if (!skipAllocate) {
+      allocateTensors();
+    }
   }
 
   /// Creates interpreter from model
@@ -136,10 +137,14 @@ class Interpreter {
   /// Creates interpreter from an address.
   ///
   /// Typically used for passing interpreter between isolates.
+  /// [allocated] defaults to true because fromAddress is typically called
+  /// after tensors have already been allocated on the original interpreter.
+  /// This avoids redundant (and potentially thread-unsafe) allocateTensors()
+  /// calls when used across isolate boundaries.
   factory Interpreter.fromAddress(int address,
-      {bool allocated = false, bool deleted = false}) {
+      {bool allocated = true, bool deleted = false}) {
     final interpreter = Pointer<TfLiteInterpreter>.fromAddress(address);
-    return Interpreter._(interpreter)
+    return Interpreter._(interpreter, skipAllocate: allocated)
       .._deleted = deleted
       .._allocated = allocated;
   }
