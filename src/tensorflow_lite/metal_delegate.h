@@ -78,7 +78,7 @@ TFL_CAPI_EXPORT extern void TFLGpuDelegateDelete(TfLiteDelegate* delegate);
 // *** Must be called *after* `Interpreter::ModifyGraphWithDelegate`. ***
 // WARNING: This is an experimental API and subject to change.
 TFL_CAPI_EXPORT extern bool TFLGpuDelegateBindMetalBufferToTensor(
-    TfLiteDelegate* delegate, int tensor_index, id<MTLBuffer> metal_buffer);
+    TfLiteDelegate* delegate, int tensor_index, int metal_buffer);
 
 #ifdef __cplusplus
 }  // extern "C"

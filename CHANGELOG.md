@@ -1,3 +1,18 @@
+## 0.1.7
+* Improved documentation
+
+## 0.1.6
+* Upgrade macOS TFLite native library from 2.17.1 to 2.20.0 (latest stable, universal binary: arm64 + x86_64)
+* Update all C API headers to TFLite 2.20.0
+* Regenerate FFI bindings (`TfLiteOperatorCreate` now takes 4 params, `TfLiteOperatorCreateWithData` removed, new `kTfLiteOutputShapeNotKnown` status, new builtin ops)
+* Rebuild macOS custom ops dylib against 2.20.0
+
+## 0.1.5
+* Upgrade macOS TFLite native library from 2.11.0 to 2.17.1 (universal binary: arm64 + x86_64)
+* Update all C API headers to TFLite 2.17.1 (including new `TfLiteOperator` API replacing `TfLiteRegistrationExternal`)
+* Regenerate FFI bindings with new APIs (SignatureRunner, TfLiteInterpreterCancel, and more)
+* Rebuild macOS custom ops dylib as universal binary (arm64 + x86_64)
+
 ## 0.1.4
 * Bundle `libtensorflowlite_c-win.dll` from flutter_litert Windows plugin instead of downstream packages
 

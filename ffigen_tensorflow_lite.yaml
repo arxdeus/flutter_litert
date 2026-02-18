@@ -9,6 +9,7 @@ headers:
   entry-points:
     - 'src/tensorflow_lite/c_api.h'
     - 'src/tensorflow_lite/c_api_experimental.h'
+    - 'src/tensorflow_lite/operator.h'
     - 'src/tensorflow_lite/coreml_delegate.h'
     - 'src/tensorflow_lite/metal_delegate.h'
     - 'src/tensorflow_lite/xnnpack_delegate.h'
@@ -17,6 +18,7 @@ headers:
   include-directives:
     - 'src/tensorflow_lite/c_api.h'
     - 'src/tensorflow_lite/c_api_experimental.h'
+    - 'src/tensorflow_lite/operator.h'
     - 'src/tensorflow_lite/coreml_delegate.h'
     - 'src/tensorflow_lite/metal_delegate.h'
     - 'src/tensorflow_lite/xnnpack_delegate.h'
