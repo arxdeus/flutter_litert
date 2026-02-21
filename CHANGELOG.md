@@ -1,3 +1,6 @@
+## 0.1.12
+* Upgrade Windows TFLite native library from 2.18.0 to 2.20.0 (built from source via CMake + Ninja + MSVC x64)
+
 ## 0.1.11
 * Fix iOS: download xcframeworks at pod install time so static linking works on first build
 

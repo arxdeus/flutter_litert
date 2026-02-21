@@ -59,7 +59,7 @@ await isolateInterpreter.run(input, output);
 | Android | LiteRT | 1.4.1     | Maven dependency, built automatically via Gradle |
 | iOS | TensorFlow Lite | 2.20.0    | Vendored xcframeworks, linked via CocoaPods |
 | macOS | TensorFlow Lite (C API) | 2.20.0    | Pre-built dylib, bundled via CocoaPods |
-| Windows | TensorFlow Lite (C API) | Pre-built | DLL bundled via CMake |
+| Windows | TensorFlow Lite (C API) | 2.20.0    | DLL bundled via CMake |
 | Linux | TensorFlow Lite (C API) | Pre-built | Shared library bundled via CMake |
 
 iOS and macOS will be migrated to LiteRT as official CocoaPods artifacts become available.
