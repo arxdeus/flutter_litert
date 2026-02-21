@@ -54,11 +54,11 @@ await isolateInterpreter.run(input, output);
 
 ## Platform support
 
-| Platform | Runtime | Version | Bundling |
-|----------|---------|---------|----------|
-| Android | LiteRT | 1.4.1 | Maven dependency, built automatically via Gradle |
-| iOS | TensorFlow Lite | 2.17.0 | CocoaPods dependency, linked automatically |
-| macOS | TensorFlow Lite (C API) | 2.20.0 | Pre-built dylib, bundled via CocoaPods |
+| Platform | Runtime | Version   | Bundling |
+|----------|---------|-----------|----------|
+| Android | LiteRT | 1.4.1     | Maven dependency, built automatically via Gradle |
+| iOS | TensorFlow Lite | 2.20.0    | Vendored xcframeworks, linked via CocoaPods |
+| macOS | TensorFlow Lite (C API) | 2.20.0    | Pre-built dylib, bundled via CocoaPods |
 | Windows | TensorFlow Lite (C API) | Pre-built | DLL bundled via CMake |
 | Linux | TensorFlow Lite (C API) | Pre-built | Shared library bundled via CMake |
 

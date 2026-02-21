@@ -1,3 +1,8 @@
+## 0.1.8
+* Upgrade iOS TensorFlow Lite from 2.17.0 (CocoaPods) to 2.20.0 (built from source via Bazel)
+* Replace CocoaPods TensorFlowLiteSwift dependency with vendored xcframeworks (TensorFlowLiteC, Metal delegate, CoreML delegate)
+* All xcframeworks support device arm64 + simulator arm64/x86_64 (Apple Silicon and Intel Macs)
+
 ## 0.1.7
 * Improved documentation
 
