@@ -1,3 +1,12 @@
+## 0.1.11
+* Fix iOS: download xcframeworks at pod install time so static linking works on first build
+
+## 0.1.10
+* Fix macOS: bundle native libraries in pub package so `flutter test` works without manual setup
+
+## 0.1.9
+* Fix iOS and macOS podspec compatibility with Ruby 3.4+ (Prism parser)
+
 ## 0.1.8
 * Upgrade iOS TensorFlow Lite from 2.17.0 (CocoaPods) to 2.20.0 (built from source via Bazel)
 * Replace CocoaPods TensorFlowLiteSwift dependency with vendored xcframeworks (TensorFlowLiteC, Metal delegate, CoreML delegate)

@@ -43,46 +43,28 @@ LiteRT (formerly TensorFlow Lite) plugin for Flutter apps.
     'HEADER_SEARCH_PATHS' => '"${PODS_TARGET_SRCROOT}/../src" "${PODS_TARGET_SRCROOT}/../src/custom_ops"',
   }
 
-  # When xcframeworks are present locally (git clone / local dev), use vendored_frameworks.
-  # When installed from pub.dev, they are excluded to stay under the 100 MB size limit
-  # and are instead downloaded automatically during the first build via the script phase.
-  if File.exist?(File.join(__dir__, 'TensorFlowLiteC.xcframework'))
-    # Local development: xcframeworks are vendored directly
-    s.vendored_frameworks = 'TensorFlowLiteC.xcframework',
-                            'TensorFlowLiteCMetal.xcframework',
-                            'TensorFlowLiteCCoreML.xcframework'
-
-    s.pod_target_xcconfig = common_xcconfig.merge({
-      'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
-    })
-  else
-    # Published package: download xcframeworks during build, link manually via xcconfig
-    s.pod_target_xcconfig = common_xcconfig.merge({
-      'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load -framework TensorFlowLiteC -framework TensorFlowLiteCCoreML -framework TensorFlowLiteCMetal',
-      'FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]' => '$(inherited) "${PODS_TARGET_SRCROOT}/TensorFlowLiteC.xcframework/ios-arm64" "${PODS_TARGET_SRCROOT}/TensorFlowLiteCCoreML.xcframework/ios-arm64" "${PODS_TARGET_SRCROOT}/TensorFlowLiteCMetal.xcframework/ios-arm64"',
-      'FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(inherited) "${PODS_TARGET_SRCROOT}/TensorFlowLiteC.xcframework/ios-arm64_x86_64-simulator" "${PODS_TARGET_SRCROOT}/TensorFlowLiteCCoreML.xcframework/ios-arm64_x86_64-simulator" "${PODS_TARGET_SRCROOT}/TensorFlowLiteCMetal.xcframework/ios-arm64_x86_64-simulator"'
-    })
-
-    s.script_phase = {
-      :name => 'Download TFLite Frameworks',
-      :script => <<-SCRIPT
-        FRAMEWORK_DIR="${PODS_TARGET_SRCROOT}"
-        MARKER="${FRAMEWORK_DIR}/TensorFlowLiteC.xcframework/ios-arm64/TensorFlowLiteC.framework/TensorFlowLiteC"
-        if [ ! -f "${MARKER}" ]; then
-          echo "Downloading TensorFlow Lite iOS frameworks..."
-          curl -sL "https://github.com/hugocornellier/flutter_litert/releases/download/libs-v0.1.8/ios-frameworks.zip" -o "${FRAMEWORK_DIR}/_tflite_ios.zip"
-          if [ $? -ne 0 ]; then
-            echo "error: Failed to download TFLite frameworks. Check your internet connection."
-            exit 1
-          fi
-          unzip -qo "${FRAMEWORK_DIR}/_tflite_ios.zip" -d "${FRAMEWORK_DIR}"
-          rm -f "${FRAMEWORK_DIR}/_tflite_ios.zip"
-          echo "TensorFlow Lite iOS frameworks installed successfully."
-        fi
-      SCRIPT
-      :execution_position => :before_compile
-    }
+  # Download iOS xcframeworks if not present (pub.dev packages exclude them to
+  # stay under the 100 MB size limit; ~85 MB download, cached after first run).
+  framework_dir = __dir__
+  marker = File.join(framework_dir, 'TensorFlowLiteC.xcframework',
+                     'ios-arm64', 'TensorFlowLiteC.framework', 'TensorFlowLiteC')
+  unless File.exist?(marker)
+    puts '[flutter_litert] Downloading TensorFlow Lite iOS frameworks...'
+    zip = File.join(framework_dir, '_tflite_ios.zip')
+    system("curl -sL 'https://github.com/hugocornellier/flutter_litert/releases/download/libs-v0.1.8/ios-frameworks.zip' -o '#{zip}'")
+    abort '[flutter_litert] ERROR: Failed to download TFLite iOS frameworks. Check your internet connection.' unless $?.success?
+    system("unzip -qo '#{zip}' -d '#{framework_dir}'")
+    File.delete(zip) if File.exist?(zip)
+    puts '[flutter_litert] TensorFlow Lite iOS frameworks installed.'
   end
+
+  s.vendored_frameworks = 'TensorFlowLiteC.xcframework',
+                           'TensorFlowLiteCMetal.xcframework',
+                           'TensorFlowLiteCCoreML.xcframework'
+
+  s.pod_target_xcconfig = common_xcconfig.merge({
+    'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
+  })
 
   s.user_target_xcconfig = {
     'OTHER_LDFLAGS' => '$(inherited) -ObjC'
