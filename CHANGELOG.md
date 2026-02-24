@@ -1,3 +1,15 @@
+## 0.1.16
+* Register iOS pluginClass 
+
+## 0.1.15
+* Add missing null check in interpreter teardown path on macOS
+
+## 0.1.14
+* Improve IsolateInterpreter shutdown reliability on iOS to prevent rare use-after-free when closing during active inference
+
+## 0.1.13
+* Add Swift Package Manager (SPM) support for iOS and macOS
+
 ## 0.1.12
 * Upgrade Windows TFLite native library from 2.18.0 to 2.20.0 (built from source via CMake + Ninja + MSVC x64)
 

@@ -19,6 +19,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(version, '42');
+    expect(version, '2.20.0');
   });
 }

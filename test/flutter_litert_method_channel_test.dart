@@ -6,7 +6,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   MethodChannelFlutterLitert platform = MethodChannelFlutterLitert();
-  const MethodChannel channel = MethodChannel('tflite_flutter');
+  const MethodChannel channel = MethodChannel('flutter_litert');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
