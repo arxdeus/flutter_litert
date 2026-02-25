@@ -88,8 +88,9 @@ DynamicLibrary _loadDesktopLibrary() {
     // Also check without Versions/A (for symlinked frameworks)
     final frameworkResourcesPathAlt =
         '${appBundle.path}/Frameworks/flutter_litert.framework/Resources/$libName';
-    attemptedPaths
-        .add('Framework Resources path (alt): $frameworkResourcesPathAlt');
+    attemptedPaths.add(
+      'Framework Resources path (alt): $frameworkResourcesPathAlt',
+    );
     try {
       return DynamicLibrary.open(frameworkResourcesPathAlt);
     } catch (e) {
@@ -164,13 +165,14 @@ DynamicLibrary _loadDesktopLibrary() {
 
   // If all strategies fail, provide a helpful error message
   throw UnsupportedError(
-      'Failed to load TensorFlow Lite library. Attempted paths:\n'
-      '${attemptedPaths.map((p) => '  - $p').join('\n')}\n\n'
-      'Solutions:\n'
-      '  1. For production apps: Ensure native libraries are bundled correctly\n'
-      '  2. For testing: Set TFLITE_LIB_PATH environment variable:\n'
-      '     TFLITE_LIB_PATH=/path/to/library flutter test\n'
-      '  3. For testing: Ensure libraries exist in the project fallback locations');
+    'Failed to load TensorFlow Lite library. Attempted paths:\n'
+    '${attemptedPaths.map((p) => '  - $p').join('\n')}\n\n'
+    'Solutions:\n'
+    '  1. For production apps: Ensure native libraries are bundled correctly\n'
+    '  2. For testing: Set TFLITE_LIB_PATH environment variable:\n'
+    '     TFLITE_LIB_PATH=/path/to/library flutter test\n'
+    '  3. For testing: Ensure libraries exist in the project fallback locations',
+  );
 }
 
 /// Resolves the root directory of a Dart package by reading
@@ -179,8 +181,9 @@ DynamicLibrary _loadDesktopLibrary() {
 /// bundled inside the flutter_litert package source tree.
 String? _resolvePackagePath(String packageName) {
   try {
-    final configFile =
-        File('${Directory.current.path}/.dart_tool/package_config.json');
+    final configFile = File(
+      '${Directory.current.path}/.dart_tool/package_config.json',
+    );
     if (!configFile.existsSync()) return null;
 
     final config = jsonDecode(configFile.readAsStringSync()) as Map;

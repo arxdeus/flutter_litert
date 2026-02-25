@@ -33,7 +33,8 @@ extension ListShape on List {
 
     if (numElements != computeNumElements) {
       throw ArgumentError(
-          'Total elements mismatch expected: $numElements elements for shape: $shape but found $computeNumElements');
+        'Total elements mismatch expected: $numElements elements for shape: $shape but found $computeNumElements',
+      );
     }
 
     if (dims <= 5) {
@@ -52,9 +53,11 @@ extension ListShape on List {
     var reshapedList = flatten<dynamic>();
     for (var i = dims - 1; i > 0; i--) {
       var temp = [];
-      for (var start = 0;
-          start + shape[i] <= reshapedList.length;
-          start += shape[i]) {
+      for (
+        var start = 0;
+        start + shape[i] <= reshapedList.length;
+        start += shape[i]
+      ) {
         temp.add(reshapedList.sublist(start, start + shape[i]));
       }
       reshapedList = temp;
@@ -66,10 +69,7 @@ extension ListShape on List {
     var flatList = flatten<T>();
     List<List<T>> reshapedList = List.generate(
       shape[0],
-      (i) => List.generate(
-        shape[1],
-        (j) => flatList[i * shape[1] + j],
-      ),
+      (i) => List.generate(shape[1], (j) => flatList[i * shape[1] + j]),
     );
 
     return reshapedList;
@@ -102,10 +102,11 @@ extension ListShape on List {
           shape[2],
           (k) => List.generate(
             shape[3],
-            (l) => flatList[i * shape[1] * shape[2] * shape[3] +
-                j * shape[2] * shape[3] +
-                k * shape[3] +
-                l],
+            (l) =>
+                flatList[i * shape[1] * shape[2] * shape[3] +
+                    j * shape[2] * shape[3] +
+                    k * shape[3] +
+                    l],
           ),
         ),
       ),
@@ -126,11 +127,12 @@ extension ListShape on List {
             shape[3],
             (l) => List.generate(
               shape[4],
-              (m) => flatList[i * shape[1] * shape[2] * shape[3] * shape[4] +
-                  j * shape[2] * shape[3] * shape[4] +
-                  k * shape[3] * shape[4] +
-                  l * shape[4] +
-                  m],
+              (m) =>
+                  flatList[i * shape[1] * shape[2] * shape[3] * shape[4] +
+                      j * shape[2] * shape[3] * shape[4] +
+                      k * shape[3] * shape[4] +
+                      l * shape[4] +
+                      m],
             ),
           ),
         ),

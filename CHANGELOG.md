@@ -1,3 +1,9 @@
+## 0.2.1
+* Update documentation
+
+## 0.2.0
+* Web support (experimental) 
+
 ## 0.1.16
 * Register iOS pluginClass 
 
