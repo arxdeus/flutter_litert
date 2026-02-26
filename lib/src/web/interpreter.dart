@@ -172,10 +172,12 @@ class Interpreter {
         _outputTensors!.add(_tensorFromJSTensor(outputJsTensor, info));
         outputJsTensor.dispose();
       }
-    } else if (result is JSTensor) {
+    } else {
+      // ignore: invalid_runtime_check_with_js_interop_types
+      final jsTensor = result as JSTensor;
       final info = modelOutputs.isNotEmpty ? modelOutputs[0] : null;
-      _outputTensors!.add(_tensorFromJSTensor(result, info));
-      result.dispose();
+      _outputTensors!.add(_tensorFromJSTensor(jsTensor, info));
+      jsTensor.dispose();
     }
 
     // Dispose input tensors

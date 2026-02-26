@@ -1,11 +1,25 @@
+## 1.0.1
+* Improve Custom Ops documentation
+
+## 1.0.0
+* Upgrade Linux TFLite native library from 2.9.3 to 2.20.0 (built from source via CMake + Ninja + GCC x86_64)
+* First stable release: 
+  * All platforms are on updated 2.20.0 library files, official final stable release of TFLite
+  * Pre-bundling works on all platforms: users no longer need to do bundle libs as was required with `tflite_flutter`
+  * Custom ops supported - see [face_detection_tflite v5.0.2](https://pub.dev/packages/face_detection_tflite/versions/5.0.2) `example` directory for a working example (the binary segmentation model selfie_segmenter.tflite uses custom ops)
+  * Web support (experimental) functional - see [pose_detection v1.0.1](https://pub.dev/packages/pose_detection/versions/1.0.1) `web_example` directory for a working example
+
+## 0.2.2
+* Update dependencies
+
 ## 0.2.1
 * Update documentation
 
 ## 0.2.0
-* Web support (experimental) 
+* Web support (experimental)
 
 ## 0.1.16
-* Register iOS pluginClass 
+* Register iOS pluginClass
 
 ## 0.1.15
 * Add missing null check in interpreter teardown path on macOS

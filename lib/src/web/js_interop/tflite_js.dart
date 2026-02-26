@@ -8,7 +8,8 @@ import 'tfjs_tensor.dart';
 /// Checks whether the TFLite.js runtime has been loaded.
 bool isTFLiteInitialized() {
   final tflite = globalContext['tflite'];
-  return tflite is JSObject && tflite.has('loadTFLiteModel');
+  if (!tflite.isA<JSObject>()) return false;
+  return (tflite as JSObject).has('loadTFLiteModel');
 }
 
 /// Low-level JS binding for tflite.loadTFLiteModel().
@@ -70,8 +71,10 @@ class TFLiteModel {
   /// [inputs] must be a [JSTensor], [List<JSTensor>], or [NamedTensorMap].
   T predict<T>(Object inputs) {
     assert(
+      // ignore: invalid_runtime_check_with_js_interop_types
       inputs is JSTensor ||
           inputs is List<JSTensor> ||
+          // ignore: invalid_runtime_check_with_js_interop_types
           inputs is NamedTensorMap,
       'Input must be JSTensor or List<JSTensor> or NamedTensorMap',
     );
@@ -88,15 +91,17 @@ class TFLiteModel {
     }
     final output = _model.predict(jsInput, null);
 
-    if (output is JSArray) {
+    if (output.isA<JSArray<JSAny?>>()) {
+      final arr = output as JSArray<JSAny?>;
       final outputs = List<JSTensor>.generate(
-        output.length,
-        (i) => (output[i] as JSTensor?)!,
+        arr.length,
+        (i) => (arr[i] as JSTensor?)!,
         growable: false,
       );
       return outputs as T;
     }
 
+    // ignore: invalid_runtime_check_with_js_interop_types
     return output as T;
   }
 

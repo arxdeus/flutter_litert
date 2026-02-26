@@ -93,11 +93,16 @@ extension NamedTensorMapExtensions on NamedTensorMap {
   dynamic operator [](String name) => (this as JSObject).getProperty(name.toJS);
 
   void operator []=(String name, Object value) {
+    // ignore: invalid_runtime_check_with_js_interop_types
     if (value is JSTensor) {
       (this as JSObject).setProperty(name.toJS, value as JSAny);
+      return;
     }
     (this as JSObject).setProperty(name.toJS, value.jsify());
   }
 
-  T get<T>(String name) => (this as JSObject).getProperty(name.toJS) as T;
+  T get<T>(String name) {
+    // ignore: invalid_runtime_check_with_js_interop_types
+    return (this as JSObject).getProperty(name.toJS) as T;
+  }
 }

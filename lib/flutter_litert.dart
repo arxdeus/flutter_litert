@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 /// LiteRT (formerly TensorFlow Lite) for Flutter
-library flutter_litert;
+library;
 
 export 'src/all_native.dart' if (dart.library.js_interop) 'src/all_web.dart';
 export 'src/quanitzation_params.dart';
