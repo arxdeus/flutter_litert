@@ -15,19 +15,21 @@ This project started as a fork of [`tflite_flutter`](https://pub.dev/packages/tf
 
 The biggest pain point with `tflite_flutter` was native library setup. You had to manually build `.so`, `.dll`, or `.dylib` files and place them in the right directories for each platform. This was tedious, error-prone, and easy to get wrong.
 
-**`flutter_litert` bundles all native libraries automatically.** Add the dependency, and it works. No manual downloads, no copying files around, no platform-specific setup steps.
+**`flutter_litert` bundles all native libraries automatically.** Simply add the dependency, and it works out of the box.
 
-Other improvements over `tflite_flutter`:
+Main improvements over `tflite_flutter`:
 
-- Native libraries are kept up to date across all platforms
-- Custom ops are built and bundled automatically (e.g. MediaPipe model support)
-- GPU delegate libraries are included where available
+- Native libraries bundled automatically
+  - Prebuilt binaries for MacOS/Windows/Linux are served automatically. Manuel steps no longer necessasry.
+- Native libraries are kept up to date across all platforms — [See library info](#platform-support)
+- [Custom ops support](#custom-ops)
+- [Web support](#web-support)
 
 ## Installation
 
 ```yaml
 dependencies:
-  flutter_litert: ^0.1.7
+  flutter_litert: ^1.0.3
 ```
 
 That's it for native platforms. For web, call `initializeWeb()` before creating an interpreter (see [Web support](#web-support)).
