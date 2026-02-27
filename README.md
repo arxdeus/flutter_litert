@@ -1,5 +1,8 @@
 # flutter_litert
 
+[![pub points](https://img.shields.io/pub/points/flutter_litert?color=2E8B57&label=pub%20points)](https://pub.dev/packages/flutter_litert/score)
+[![pub package](https://img.shields.io/pub/v/flutter_litert.svg)](https://pub.dev/packages/flutter_litert)
+
 A Flutter plugin for on-device ML inference using LiteRT (formerly TensorFlow Lite), with native libraries bundled automatically on every platform.
 
 ## Background  
