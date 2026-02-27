@@ -1,3 +1,7 @@
+## 1.0.2
+* Add native dylibs to SPM Package.swift 
+* Update Dart loading paths for SPM bundle
+
 ## 1.0.1
 * Improve Custom Ops documentation
 

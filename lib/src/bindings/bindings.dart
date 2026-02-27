@@ -106,10 +106,23 @@ DynamicLibrary _loadDesktopLibrary() {
       // Continue
     }
 
-    // Strategy 4: Resolve from flutter_litert package source (for flutter test)
+    // Strategy 4: SPM bundle path
+    // When resolved via Swift Package Manager, resources end up inside
+    // a .bundle in the app's Resources directory.
+    final spmBundlePath =
+        '${appBundle.path}/Resources/flutter_litert_flutter_litert.bundle/Contents/Resources/$libName';
+    attemptedPaths.add('SPM bundle path: $spmBundlePath');
+    try {
+      return DynamicLibrary.open(spmBundlePath);
+    } catch (e) {
+      // Continue
+    }
+
+    // Strategy 5: Resolve from flutter_litert package source (for flutter test)
     final packagePath = _resolvePackagePath('flutter_litert');
     if (packagePath != null) {
-      final packageMacosPath = '$packagePath/macos/$libName';
+      final packageMacosPath =
+          '$packagePath/macos/flutter_litert/Sources/flutter_litert/Resources/$libName';
       attemptedPaths.add('Package source path: $packageMacosPath');
       try {
         return DynamicLibrary.open(packageMacosPath);

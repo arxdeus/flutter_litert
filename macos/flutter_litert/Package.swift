@@ -16,6 +16,8 @@ let package = Package(
             name: "flutter_litert",
             dependencies: [],
             resources: [
+                .copy("Resources/libtensorflowlite_c-mac.dylib"),
+                .copy("Resources/libtflite_custom_ops.dylib"),
                 .process("PrivacyInfo.xcprivacy"),
             ]
         )

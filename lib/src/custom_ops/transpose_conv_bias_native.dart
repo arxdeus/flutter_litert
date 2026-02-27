@@ -155,7 +155,7 @@ class TransposeConvBiasOp {
       // Continue to fallback paths
     }
 
-    // macOS: Check various locations where CocoaPods puts libraries
+    // macOS: Check various locations where CocoaPods/SPM puts libraries
     if (Platform.isMacOS) {
       final appBundle = Directory(Platform.resolvedExecutable).parent.parent;
 
@@ -187,6 +187,17 @@ class TransposeConvBiasOp {
       attemptedPaths.add('Resources path: $resourcesPath');
       try {
         return DynamicLibrary.open(resourcesPath);
+      } catch (e) {
+        // Continue
+      }
+
+      // SPM bundle path — when resolved via Swift Package Manager,
+      // resources end up inside a .bundle in the app's Resources directory.
+      final spmBundlePath =
+          '${appBundle.path}/Resources/flutter_litert_flutter_litert.bundle/Contents/Resources/$libName';
+      attemptedPaths.add('SPM bundle path: $spmBundlePath');
+      try {
+        return DynamicLibrary.open(spmBundlePath);
       } catch (e) {
         // Continue
       }

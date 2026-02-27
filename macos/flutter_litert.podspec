@@ -24,5 +24,9 @@ LiteRT (formerly TensorFlow Lite) Flutter plugin with MediaPipe custom operation
   # Bundle the TFLite libraries as resources.
   # These dylibs are small enough (~13 MB) to ship in the pub package,
   # so they are always present — both for app builds (CocoaPods) and `flutter test`.
-  s.resources = ['libtensorflowlite_c-mac.dylib', 'libtflite_custom_ops.dylib']
+  # Dylibs live inside the SPM source tree so both SPM and CocoaPods share one copy.
+  s.resources = [
+    'flutter_litert/Sources/flutter_litert/Resources/libtensorflowlite_c-mac.dylib',
+    'flutter_litert/Sources/flutter_litert/Resources/libtflite_custom_ops.dylib',
+  ]
 end
